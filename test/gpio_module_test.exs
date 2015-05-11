@@ -13,7 +13,9 @@ defmodule GpioModuleTest do
   test "gpio test" do
     assert :ok = GpioModule.start_gpio("channel Z", 17, 5)
     assert :ok = GpioModule.start_gpio("channel Z", 18, 4)
-		GpioModule.listen_for_change
+	  {:ok, pid5} = Gpio.start_link(5, :output)
+	  {:ok, pid6} = Gpio.start_link(6, :output)
+		GpioModule.listen_for_change(pid5, pid6)
   end
 	
 	
