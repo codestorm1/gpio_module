@@ -6,4 +6,12 @@ defmodule GpioModule do
 		:ok
 	end
 
+	def listen_for_change do
+		receive do
+			{:gpio_interrupt, pin, state} -> IO.puts "got something #{pin} #{state}"
+			listen_for_change
+		end
+	end
+
+
 end
