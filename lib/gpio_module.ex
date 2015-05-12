@@ -1,4 +1,5 @@
-	defmodule GpioModule do
+defmodule GpioModule do
+	#defstruct current_channel: 0, pid_map: %{}
 
 	def start_gpio(name, input_pin, led_pin, state) do
 		{:ok, pid} = Gpio.start_link(input_pin, :input)
