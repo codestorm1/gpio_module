@@ -23,7 +23,16 @@ defmodule GpioModule do
 				Gpio.write(led_pid, 1)
 				state = %{state | current_led_pid: led_pid}
 				listen_for_change(state)
-			{:gpio_interrupt, _pin, _state} ->
+			{:gpio_interrupt, input_pin, :falling} ->
+					IO.puts "got falling #{input_pin}"
+					channel = state.pid_map[input_pin]
+					led_pid = channel[:led_pid]
+					if state.current_led_pid == led_pid do
+							Gpio.write(state.current_led_pid, 0) #turn off last led
+							state = %{state | current_led_pid: nil}
+					end
+					listen_for_change(state)
+			{:gpio_interrupt, _pin, _state} ->     
 				listen_for_change(state)
 		end
 	end
