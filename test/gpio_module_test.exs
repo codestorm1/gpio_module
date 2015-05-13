@@ -8,6 +8,4 @@ defmodule GpioModuleTest do
     assert {:ok, state} = GpioModule.start_gpio("channel red", 18, 6, state)
 		GpioModule.listen_for_change(state)
   end
-	
-	
 end
